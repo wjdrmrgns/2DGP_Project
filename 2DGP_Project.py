@@ -1,6 +1,5 @@
 from pico2d import *
 
-
 class Map_shop:
     def __init__(self):
         self.frame = 0
