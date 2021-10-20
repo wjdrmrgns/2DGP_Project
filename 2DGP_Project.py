@@ -52,6 +52,7 @@ class character_move:
         self.stand = load_image('will stand.png')
         self.spear = load_image('will spear.png')
         self.weapon_spear_1 = load_image('spear.png')
+        self.shortsword = load_image('will shortsword.png')
 
     def update(self):
         global move
@@ -84,6 +85,7 @@ class character_move:
         global map_change
         global attackcheck
         global move
+        # global weapon_change
 
         # 공격시 프레임 초기화
         if attackcheck == 1:
@@ -91,7 +93,13 @@ class character_move:
             attackcheck = 0
 
         # 공격 끝날 때 프레임 초기화
-        if self.frame == 23:
+        framecontrol = 0
+        if weapon_change == 0:
+            framecontrol = 0
+        elif weapon_change == 1:
+            framecontrol = 5
+
+        if self.frame == 23 - framecontrol:
             attackcheck = 0
             self.frame = 0
             if move == 9:
@@ -124,21 +132,29 @@ class character_move:
             elif move == 8:
                 self.stand_dg.clip_draw(0, 0, 130,130, self.x, self.y)
             elif move == 9:
-                self.weapon_spear_1.clip_draw(self.frame * 130, 0, 130, 132, self.x - 2, self.y + 11)
-                self.spear.clip_draw(self.frame * 258, 0, 258,260, self.x, self.y)
-
+                if weapon_change == 0:
+                    self.weapon_spear_1.clip_draw(self.frame * 130, 0, 130, 132, self.x - 2, self.y + 11)
+                    self.spear.clip_draw(self.frame * 258, 0, 258, 260, self.x, self.y)
+                elif weapon_change == 1:
+                    self.shortsword.clip_draw(self.frame * 130, 0, 130, 132,self.x,self.y)
             elif move == 10:
-                self.weapon_spear_1.clip_draw(self.frame * 130, 132, 130, 132, self.x + 5, self.y - 11)
-                self.spear.clip_draw(self.frame * 258, 260, 258,260, self.x, self.y)
-
+                if weapon_change == 0:
+                    self.weapon_spear_1.clip_draw(self.frame * 130, 132, 130, 132, self.x + 5, self.y - 11)
+                    self.spear.clip_draw(self.frame * 258, 260, 258,260, self.x, self.y)
+                elif weapon_change == 1:
+                    self.shortsword.clip_draw(self.frame * 130, 132, 130, 132,self.x,self.y)
             elif move == 11:
-                self.weapon_spear_1.clip_draw(self.frame * 130, 264, 130, 132, self.x - 18, self.y)
-                self.spear.clip_draw(self.frame * 258, 520, 258,260, self.x, self.y)
-
+                if weapon_change == 0:
+                    self.weapon_spear_1.clip_draw(self.frame * 130, 264, 130, 132, self.x - 18, self.y)
+                    self.spear.clip_draw(self.frame * 258, 520, 258, 260, self.x, self.y)
+                elif weapon_change == 1:
+                    self.shortsword.clip_draw(self.frame * 130, 264, 130, 132,self.x,self.y)
             elif move == 12:
-                self.weapon_spear_1.clip_draw(self.frame * 130, 392, 130, 132, self.x + 18, self.y-2)
-                self.spear.clip_draw(self.frame * 258, 780, 258,260, self.x, self.y)
-
+                if weapon_change == 0:
+                    self.weapon_spear_1.clip_draw(self.frame * 130, 392, 130, 132, self.x + 18, self.y - 2)
+                    self.spear.clip_draw(self.frame * 258, 780, 258, 260, self.x, self.y)
+                elif weapon_change == 1:
+                    self.shortsword.clip_draw(self.frame * 130, 396, 130, 132,self.x,self.y)
 
         elif map_change == 1:
             if move == 1:
@@ -164,6 +180,7 @@ def handle_events():
     global move
     global will
     global attackcheck
+    global weapon_change
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -189,6 +206,8 @@ def handle_events():
                 elif move == 4 or move == 8:
                     move = 12
                 attackcheck = 1
+            elif event.key == SDLK_f:
+                weapon_change = (weapon_change + 1) % 3
 
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_LEFT:
@@ -203,6 +222,7 @@ def handle_events():
 open_canvas(1200, 600)
 move = 0
 map_change = -1
+weapon_change = 0
 attackcheck = 0
 c_x, c_y = 400, 400
 will = character_move()
