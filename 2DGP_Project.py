@@ -51,6 +51,7 @@ class character_move:
         self.walk = load_image('will walk.png')
         self.stand = load_image('will stand.png')
         self.spear = load_image('will spear.png')
+        self.weapon_spear_1 = load_image('spear.png')
 
     def update(self):
         global move
@@ -123,13 +124,21 @@ class character_move:
             elif move == 8:
                 self.stand_dg.clip_draw(0, 0, 130,130, self.x, self.y)
             elif move == 9:
+                self.weapon_spear_1.clip_draw(self.frame * 130, 0, 130, 132, self.x - 2, self.y + 11)
                 self.spear.clip_draw(self.frame * 258, 0, 258,260, self.x, self.y)
+
             elif move == 10:
+                self.weapon_spear_1.clip_draw(self.frame * 130, 132, 130, 132, self.x + 5, self.y - 11)
                 self.spear.clip_draw(self.frame * 258, 260, 258,260, self.x, self.y)
+
             elif move == 11:
+                self.weapon_spear_1.clip_draw(self.frame * 130, 264, 130, 132, self.x - 18, self.y)
                 self.spear.clip_draw(self.frame * 258, 520, 258,260, self.x, self.y)
+
             elif move == 12:
+                self.weapon_spear_1.clip_draw(self.frame * 130, 392, 130, 132, self.x + 18, self.y-2)
                 self.spear.clip_draw(self.frame * 258, 780, 258,260, self.x, self.y)
+
 
         elif map_change == 1:
             if move == 1:
