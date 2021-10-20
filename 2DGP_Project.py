@@ -54,7 +54,7 @@ class character_move:
         self.weapon_spear_1 = load_image('spear.png')
         self.shortsword = load_image('will shortsword.png')
         self.weapon_shortsword_1 = load_image('shortsword.png')
-
+        self.gloves = load_image('will gloves.png')
 
     def update(self):
         global move
@@ -100,6 +100,8 @@ class character_move:
             framecontrol = 0
         elif weapon_change == 1:
             framecontrol = 5
+        elif weapon_change == 2:
+            framecontrol = 3
 
         if self.frame == 23 - framecontrol:
             attackcheck = 0
@@ -140,6 +142,8 @@ class character_move:
                 elif weapon_change == 1:
                     self.shortsword.clip_draw(self.frame * 130, 0, 130, 132,self.x,self.y)
                     self.weapon_shortsword_1.clip_draw(self.frame * 130, 0, 130, 132, self.x, self.y)
+                elif weapon_change == 2:
+                    self.gloves.clip_draw(self.frame * 130, 0, 130, 132, self.x, self.y)
             elif move == 10:
                 if weapon_change == 0:
                     self.weapon_spear_1.clip_draw(self.frame * 130, 132, 130, 132, self.x + 5, self.y - 11)
@@ -147,6 +151,8 @@ class character_move:
                 elif weapon_change == 1:
                     self.shortsword.clip_draw(self.frame * 130, 132, 130, 132,self.x,self.y)
                     self.weapon_shortsword_1.clip_draw(self.frame * 130, 132, 130, 132, self.x, self.y)
+                elif weapon_change == 2:
+                    self.gloves.clip_draw(self.frame * 130, 132, 130, 132, self.x, self.y)
             elif move == 11:
                 if weapon_change == 0:
                     self.weapon_spear_1.clip_draw(self.frame * 130, 264, 130, 132, self.x - 18, self.y)
@@ -154,6 +160,8 @@ class character_move:
                 elif weapon_change == 1:
                     self.shortsword.clip_draw(self.frame * 130, 264, 130, 132,self.x,self.y)
                     self.weapon_shortsword_1.clip_draw(self.frame * 130, 264, 130, 132, self.x, self.y)
+                elif weapon_change == 2:
+                    self.gloves.clip_draw(self.frame * 130, 264, 130, 132, self.x, self.y)
             elif move == 12:
                 if weapon_change == 0:
                     self.weapon_spear_1.clip_draw(self.frame * 130, 392, 130, 132, self.x + 18, self.y - 2)
@@ -161,6 +169,9 @@ class character_move:
                 elif weapon_change == 1:
                     self.shortsword.clip_draw(self.frame * 130, 396, 130, 132,self.x,self.y)
                     self.weapon_shortsword_1.clip_draw(self.frame * 130, 396, 130, 132, self.x, self.y)
+                elif weapon_change == 2:
+                    self.gloves.clip_draw(self.frame * 130, 396, 130, 132, self.x, self.y)
+
 
         elif map_change == 1:
             if move == 1:
