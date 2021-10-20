@@ -50,19 +50,26 @@ class character_move:
         self.stand_dg = load_image('will stand dg.png')
         self.walk = load_image('will walk.png')
         self.stand = load_image('will stand.png')
+        self.spear = load_image('will spear.png')
 
     def update(self):
         global move
+
         runpoint = 1
         if map_change == 1:
             runpoint = 1
         elif map_change == -1:
             runpoint = 2
 
+
+
         if move <= 4:
             self.frame = (self.frame + 1) % 8
-        else:
+        elif move <= 8:
             self.frame = (self.frame + 1) % 10
+        elif move <= 12:
+            self.frame = (self.frame + 1) % 24
+
         if move == 1:
             self.y += 5 * runpoint
         elif move == 2:
@@ -74,6 +81,27 @@ class character_move:
 
     def draw(self):
         global map_change
+        global attackcheck
+        global move
+
+        # 공격시 프레임 초기화
+        if attackcheck == 1:
+            self.frame = 0
+            attackcheck = 0
+
+        # 공격 끝날 때 프레임 초기화
+        if self.frame == 23:
+            attackcheck = 0
+            self.frame = 0
+            if move == 9:
+                move = 5
+            elif move == 10:
+                move = 6
+            elif move == 11:
+                move = 7
+            elif move == 12:
+                move = 8
+
         if self.x == 200 and self.y == 400:
             self.x = 1000
             map_change *= -1
@@ -94,7 +122,14 @@ class character_move:
                 self.stand_dg.clip_draw(130, 0, 130,130, self.x, self.y)
             elif move == 8:
                 self.stand_dg.clip_draw(0, 0, 130,130, self.x, self.y)
-
+            elif move == 9:
+                self.spear.clip_draw(self.frame * 258, 0, 258,260, self.x, self.y)
+            elif move == 10:
+                self.spear.clip_draw(self.frame * 258, 260, 258,260, self.x, self.y)
+            elif move == 11:
+                self.spear.clip_draw(self.frame * 258, 520, 258,260, self.x, self.y)
+            elif move == 12:
+                self.spear.clip_draw(self.frame * 258, 780, 258,260, self.x, self.y)
 
         elif map_change == 1:
             if move == 1:
@@ -114,10 +149,12 @@ class character_move:
             elif move == 8:
                 self.stand.clip_draw(self.frame * 130, 0, 130,130, self.x, self.y)
 
+
 def handle_events():
     global running
     global move
     global will
+    global attackcheck
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -133,6 +170,17 @@ def handle_events():
                 move = 1
             elif event.key == SDLK_DOWN:
                 move = 2
+            elif event.key == SDLK_a:
+                if move == 1 or move == 5:
+                    move = 9
+                elif move == 2 or move == 6:
+                    move = 10
+                elif move == 3 or move == 7:
+                    move = 11
+                elif move == 4 or move == 8:
+                    move = 12
+                attackcheck = 1
+
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_LEFT:
                 move = 7
@@ -145,7 +193,9 @@ def handle_events():
 
 open_canvas(1200, 600)
 move = 0
-map_change = 1
+map_change = -1
+attackcheck = 0
+c_x, c_y = 400, 400
 will = character_move()
 shop = Map_shop()
 running = True
