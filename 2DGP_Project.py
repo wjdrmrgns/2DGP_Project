@@ -43,7 +43,7 @@ class Map_shop:
 
 class character_move:
     def __init__(self):
-        self.x, self.y = 400,400
+        self.x, self.y = 200,400
         self.frame = 0
 
         self.run = load_image('will run.png')
@@ -55,6 +55,7 @@ class character_move:
         self.shortsword = load_image('will shortsword.png')
         self.weapon_shortsword_1 = load_image('shortsword.png')
         self.gloves = load_image('will gloves.png')
+        # self.weapon_gloves_1 = load_image('css_sprites.png')
 
     def update(self):
         global move
@@ -115,9 +116,14 @@ class character_move:
             elif move == 12:
                 move = 8
 
-        if self.x == 200 and self.y == 400:
-            self.x = 1000
+        if (self.x > 200 and self.x < 250) and (self.y > 100 and self.y < 150):
+            self.x, self.y = 800, 400
             map_change *= -1
+        elif (self.x > 750 and self.x < 850) and (self.y > 450 and self.y < 550):
+            self.x, self.y = 225, 200
+            map_change *= -1
+
+
         if map_change == -1:
             if move == 1:
                 self.run.clip_draw(self.frame * 130, 0, 130, 130, self.x, self.y)
@@ -153,6 +159,8 @@ class character_move:
                     self.weapon_shortsword_1.clip_draw(self.frame * 130, 132, 130, 132, self.x, self.y)
                 elif weapon_change == 2:
                     self.gloves.clip_draw(self.frame * 130, 132, 130, 132, self.x, self.y)
+                    self.run.clip_draw(self.frame * 130, 132, 130, 130, self.x, self.y)
+                    # self.weapon_gloves_1.clip_draw(self.frame*130,0,130,130,self.x,self.y,100,100)
             elif move == 11:
                 if weapon_change == 0:
                     self.weapon_spear_1.clip_draw(self.frame * 130, 264, 130, 132, self.x - 18, self.y)
@@ -237,11 +245,11 @@ def handle_events():
                 move = 6
 
 open_canvas(1200, 600)
-move = 0
-map_change = -1
+move = 5
+map_change = 1
 weapon_change = 0
 attackcheck = 0
-c_x, c_y = 400, 400
+# c_x, c_y = 400, 400
 will = character_move()
 shop = Map_shop()
 running = True
